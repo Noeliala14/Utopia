@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'classes/libros.dart';
+
+ Libro miLibroPrueba = Libro(
+    id: 1,
+    titulo: 'Utopía',
+    autor: 'Noelia',
+    usuarioCreadorId: 101,
+  );
+ 
 
 void main() {
   runApp(const MainApp());
@@ -14,9 +23,9 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // Esto quita la etiqueta roja de "Debug"
       
       theme: ThemeData(),
-      home: const Scaffold(
+      home: Scaffold(
         body: Center(
-          child: Text('Hello World!'),
+          child: Text(miLibroPrueba.titulo, style: TextStyle(fontSize: 24)),
         ),
       ),
     );
