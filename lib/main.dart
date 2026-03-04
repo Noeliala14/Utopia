@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/auth_gate.dart';
 import 'firebase_options.dart';
-import 'package:flutter_application_1/features/auth/presentation/screens/home.screen.dart';
 import 'package:flutter_application_1/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
       title: 'Utopia',
       debugShowCheckedModeBanner: false, // Esto quita la etiqueta roja de "Debug"
       
-      home: const HomeScreen(),
+      home: const AuthGate(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
