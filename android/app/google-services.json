@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "49184985365",
+    "project_id": "utopia-app-26",
+    "storage_bucket": "utopia-app-26.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49184985365:android:41c18777b994d3e139991c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBliHUdNpFHD4A3mnXYlRDgKHP4hQhIA5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

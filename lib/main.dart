@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home.screen.dart';
-import 'package:flutter_application_1/themes/theme_provider.dart';
+import 'package:firebase_core/firebase_core.dart'; 
+import 'firebase_options.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/home.screen.dart';
+import 'package:flutter_application_1/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 
 // 1. EL ARRANQUE (Siempre arriba)
-void main() {
+void main() async{ //Asíncrono porque necesitamos esperar a que Firebase se inicialice antes de ejecutar la aplicación
+  WidgetsFlutterBinding.ensureInitialized(); //Aseguramos de que Flutter esté listo
+  await Firebase.initializeApp(              // Inicializamos Firebase
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     ChangeNotifierProvider(
     create: (context) => ThemeProvider(),
