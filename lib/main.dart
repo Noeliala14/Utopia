@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/features/auth/presentation/screens/auth_gate.dart';
 import 'firebase_options.dart';
 import 'package:flutter_application_1/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/login_screen.dart';
 
 
 // 1. EL ARRANQUE (Siempre arriba)
@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
       title: 'Utopia',
       debugShowCheckedModeBanner: false, // Esto quita la etiqueta roja de "Debug"
       
-      home: const AuthGate(),
+      home: const LoginScreen(), // Aquí es donde se muestra la pantalla de login al iniciar la aplicación. Luego, dependiendo del estado de autenticación, podríamos mostrar otras pantallas como el registro o la pantalla principal. 
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
