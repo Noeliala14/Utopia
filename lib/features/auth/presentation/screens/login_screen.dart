@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/auth/data/services/auth_service.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  //  Las herramientas (Controladores y Servicio)
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService(); // Asegúrate de tener tu servicio de autenticación
+
+//  Limpieza de recursos 
+  @override 
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+// La interfaz de usuario (UI)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                 // Botón de Entrar 
                 ElevatedButton(
                   onPressed: () {
-                    // Mañana lo conectamos con Firebase en esta rama feat-login
+                    // Aquí iría la lógica de autenticación, por ahora solo es un botón sin funcionalidad
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 192, 134, 192),
@@ -85,6 +105,25 @@ class LoginScreen extends StatelessWidget {
                     "INICIAR SESIÓN",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                ),
+                const SizedBox(height: 20), // Espacio entre botón y texto de registro
+
+                // Texto para ir a Registro
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RegisterScreen())
+                    );
+                  },
+                  child: const Text(
+                    "¿No tienes cuenta? Regístrate aquí",
+                  style: TextStyle(
+                      color: Colors.blueGrey, // Color que combine con tu degradado
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                  ),
+                 ),
                 ),
               ],
             ),

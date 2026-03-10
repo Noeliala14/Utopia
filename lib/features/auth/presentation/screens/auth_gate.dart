@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/presentation/screens/home.screen.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter_application_1/features/auth/presentation/screens/register_screen.dart';
 
 class AuthGate extends StatelessWidget {
@@ -18,7 +19,7 @@ class AuthGate extends StatelessWidget {
         } else if (snapshot.hasData) {
           return const HomeScreen(); // Si el usuario está autenticado, muestra la pantalla principal
         } else {
-          return const RegisterScreen(); // Si no hay usuario autenticado, muestra la pantalla de registro/inicio de sesión
+          return const LoginScreen(); // Si no hay usuario autenticado, muestra la pantalla de registro/inicio de sesión
         }
       },
     );
