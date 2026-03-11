@@ -13,7 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //  Las herramientas (Controladores y Servicio)
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService(); // Asegúrate de tener tu servicio de autenticación
+  final AuthService _authService = AuthService(); // Instancia del servicio de autenticación
 
 //  Limpieza de recursos 
   @override 
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center, // Centra verticalmente
               children: [
                 //CAPA 2: EL LOGO DE UTOPÍA (En el centro y nítido)
-                // Usamos BoxFit.contain para que mantenga su calidad original
+                // UsO BoxFit.contain para que mantenga su calidad original
                 Image.asset(
                   'assets/images/U without.png',
                   height: 150,
