@@ -1,3 +1,5 @@
 # flutter_application_1
 
-A new Flutter project.
+# Utopía - App de Intercambio de Libros
+Proyecto realizado para el ciclo de DAM.
+
