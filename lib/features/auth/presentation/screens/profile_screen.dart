@@ -5,16 +5,62 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Mi Perfil")),
+      backgroundColor: colorScheme.surface,
+
+      appBar: AppBar(
+       title: Text(
+          "Mi Perfil", 
+          style: TextStyle(color: colorScheme.inversePrimary)
+        ),
+        backgroundColor: colorScheme.primary, // Usamos el color primario del tema para el AppBar
+        iconTheme: IconThemeData(color: colorScheme.inversePrimary),
+      ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Aquí pones tu contenedor del Avatar con gradiente...
-            const CircleAvatar(radius: 50, child: Icon(Icons.person)),
+            Container(
+              padding: const EdgeInsets.all(4), // Borde exterior
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: colorScheme.primary, // Borde granate o rosa
+              ),
+              child: CircleAvatar(
+                radius: 60,
+                backgroundColor: colorScheme.secondary, // Fondo verde pastel o gris
+                child: Icon(
+                  Icons.person, 
+                  size: 60, 
+                  color: colorScheme.primary // Icono granate o rosa
+                ),
+              ),
+            ),
+
             const SizedBox(height: 20),
-            const Text("@UtopiaUser", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+
+            Text(
+              "@UtopiaUser", 
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold,
+                color: colorScheme.inversePrimary // Color que contraste con el fondo
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              "Amante de los libros",
+              style: TextStyle(
+                fontSize: 16,
+                color: colorScheme.inversePrimary.withOpacity(0.7),
+              ),
+            ),
           ],
         ),
       ),
