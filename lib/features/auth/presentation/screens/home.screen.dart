@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: colorScheme.surface,
       drawer:  DrawersOne(),
       appBar: AppBar(
-        title:Text('Utopia: Biblioteca',
+        title:Text('Utopia',
         style: TextStyle(color: colorScheme.inversePrimary, fontWeight: FontWeight.bold)
         ),
         centerTitle: true,

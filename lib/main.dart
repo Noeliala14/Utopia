@@ -4,14 +4,27 @@ import 'package:flutter_application_1/features/auth/presentation/screens/auth_ga
 import 'firebase_options.dart';
 import 'package:flutter_application_1/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/core/supabase_conf.dart/configuracion.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 
 // 1. EL ARRANQUE 
 void main() async{ //Asíncrono porque necesitamos esperar a que Firebase se inicialice antes de ejecutar la aplicación
-  WidgetsFlutterBinding.ensureInitialized(); //Aseguramos de que Flutter esté listo
+  WidgetsFlutterBinding.ensureInitialized();
+
+   //Aseguramos que Flutter esta listo para ejecutar código asíncrono antes de inicializar Firebase. Esto es necesario para evitar errores relacionados con la inicialización de Firebase antes de que Flutter esté completamente configurado.
   await Firebase.initializeApp(              // Inicializamos Firebase
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Inicializamos Supabase con la URL y la clave anónima de nuestro proyecto. Esto es necesario para poder usar los servicios de Supabase en nuestra aplicación, como autenticación, base de datos, etc.
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
+  );
+
+
 
   runApp(
     ChangeNotifierProvider(
@@ -19,6 +32,8 @@ void main() async{ //Asíncrono porque necesitamos esperar a que Firebase se ini
     child: const MainApp(),
   )); // Aquí se inicia la aplicación. runApp()uso de ChangeNotifierProvider para proporcionar el ThemeProvider a toda la aplicación, lo que nos permitirá cambiar el tema de manera dinámica.
 }
+
+
 // 2. LA CONFIGURACIÓN (El cerebro)
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -33,7 +48,8 @@ class MainApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
-}
+  }
+
 
 // 3. LA PANTALLA (Lo que se ve)
 

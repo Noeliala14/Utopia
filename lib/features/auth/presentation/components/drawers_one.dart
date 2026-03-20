@@ -9,7 +9,8 @@ class DrawersOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     // Drawer
     return Drawer(
@@ -31,7 +32,9 @@ class DrawersOne extends StatelessWidget {
 
             ListTile(
               leading: Icon(Icons.home, color: colorScheme.primary),
-              title: Text("I N I C I O", style: TextStyle(color: colorScheme.inversePrimary, letterSpacing: 2)),
+              title: Text(
+                "I N I C I O",
+                 style: TextStyle(color: colorScheme.inversePrimary, letterSpacing: 2)),
               onTap: () => Navigator.pop(context),
             ),
 
