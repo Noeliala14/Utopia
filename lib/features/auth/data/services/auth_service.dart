@@ -12,7 +12,7 @@ class AuthService {
       );
       return userCredential.user;
     } catch (e) {
-      print('Error en el registro: $e');
+      // print('Error en el registro: $e');
       return null;
     }
   }
@@ -26,7 +26,7 @@ class AuthService {
       );
       return userCredential.user;
     } catch (e) {
-      print('Error en el inicio de sesión: $e');
+      // print('Error en el inicio de sesión: $e');
       return null;
     }
   }
