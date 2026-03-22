@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
               "Amante de los libros",
               style: TextStyle(
                 fontSize: 16,
-                color: colorScheme.inversePrimary.withOpacity(0.7),
+                color: colorScheme.inversePrimary.withValues(alpha: 0.7),
               ),
             ),
           ],

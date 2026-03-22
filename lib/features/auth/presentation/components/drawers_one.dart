@@ -27,7 +27,7 @@ class DrawersOne extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-            Divider(color: colorScheme.primary.withOpacity(0.2), indent: 25, endIndent: 25),
+            Divider(color: colorScheme.primary.withValues(alpha: 0.2), indent: 25, endIndent: 25),
             const SizedBox(height: 10),
 
             ListTile(

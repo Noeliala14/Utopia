@@ -91,7 +91,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               onPressed: () async { // Acción al presionar el botón
                 String email = _emailController.text.trim(); // Obtiene el correo electrónico ingresado
                 String password = _passwordController.text.trim(); // Obtiene la contraseña ingresada
+
                 final user = await _authService.signUp(email, password); // Llama al método de registro del servicio de autenticación
+
+                if (context.mounted) { // Verifica si el contexto aún está montado antes de mostrar el SnackBar
+
 
                 if (user != null) { // Verifica si el usuario se registró correctamente
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -102,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SnackBar(content: Text('Error en el registro')),
                   );
                 }
+              }
               },
               style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.primary, // <--- ESTO PONE EL ROSA/GRANATE

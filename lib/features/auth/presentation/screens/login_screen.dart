@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 150,
                   fit: BoxFit.contain, 
 
-                 color: isDark ? colorScheme.primary.withOpacity(0.8) : null,
+                 color: isDark ? colorScheme.primary.withValues(alpha: 0.8) : null,
                 colorBlendMode: isDark ? BlendMode.modulate : null,
               ),
                 
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _emailController, // Controlador para el email
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: isDark ? colorScheme.secondary : Colors.white.withOpacity(0.8), // Ajusta el color de fondo según el tema
+                    fillColor: isDark ? colorScheme.secondary : Colors.white.withValues(alpha: 0.8), // Ajusta el color de fondo según el tema
                     hintText: 'Introduce tu Email',
                     prefixIcon: Icon(Icons.email, color: colorScheme.primary), // Usa el color primario del tema para el ícono
                     border: OutlineInputBorder(
@@ -87,9 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true, // Oculta contraseña
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: isDark ? colorScheme.secondary : Colors.white.withOpacity(0.8), // Ajusta el color de fondo según el tema
+                    fillColor: isDark ? colorScheme.secondary : Colors.white.withValues(alpha: 0.8), // Ajusta el color de fondo según el tema
                     hintText: 'Tu Contraseña',
-                    hintStyle: TextStyle(color: colorScheme.inversePrimary.withOpacity(0.5)), // Ajusta el color del hint para que sea visible en modo oscuro
+                    hintStyle: TextStyle(color: colorScheme.inversePrimary.withValues(alpha: 0.5)), // Ajusta el color del hint para que sea visible en modo oscuro
                     prefixIcon: Icon(Icons.lock, color: colorScheme.primary), // Usa el color primario del tema para el ícono
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -107,9 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // try-catch para manejar errores de autenticación
                       try {
-                        await _authService.signIn(email, password);
-                        // Si el inicio de sesión es exitoso, el StreamBuilder en AuthGate detectará el cambio y redirigirá al HomeScreen automáticamente.
+                        await _authService.signIn(email, password); // Llama al método de inicio de sesión del servicio de autenticación
+
                       } catch (e) {
+                        // escudo 
+                        if (!context.mounted) return; // Verifica si el contexto aún está montado antes de mostrar el SnackBar
+
                         // Manejo de errores (puedes mostrar un mensaje de error al usuario)
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Error al iniciar sesión: $e')),

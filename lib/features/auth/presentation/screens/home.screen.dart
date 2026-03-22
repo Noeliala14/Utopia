@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         isLoading = false; // Cambia el estado de carga incluso si hay un error
       });
-      print('Error fetching books: $e');
+      // print('Error fetching books: $e');
     }
   }
 
