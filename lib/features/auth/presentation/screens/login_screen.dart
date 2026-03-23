@@ -34,14 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
       
       body: Container(
         decoration: BoxDecoration(
-          gradient: isDark 
-          ? null 
-          : const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFF8FD3F4), Color(0xFFD4FC79)],
-            ),
-        color: isDark ? colorScheme.surface : null,
+
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors:isDark
+            ? [colorScheme.surface, colorScheme.surfaceContainerHighest] 
+              : [colorScheme.primaryContainer.withValues(alpha: 0.3), colorScheme.surface],
+          ),
+        
+       
       ),
         child: Center(
           child: SingleChildScrollView( // Para evitar problemas con el teclado
@@ -56,21 +58,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   'assets/images/U without.png',
                   height: 150,
                   fit: BoxFit.contain, 
-
-                 color: isDark ? colorScheme.primary.withValues(alpha: 0.8) : null,
+                // filtro para modo oscuro 
+                color: isDark ? colorScheme.primary.withValues(alpha: 0.8) : null,
                 colorBlendMode: isDark ? BlendMode.modulate : null,
               ),
                 
                 const SizedBox(height: 50), // Espacio entre logo y formulario
 
-                // CAPA 3: EL FORMULARIO
+                // CAPA 3: 
+                //EL FORMULARIO
 
                 // Campo de Email
                 TextField(
                   controller: _emailController, // Controlador para el email
+                  style: TextStyle(color: colorScheme.onSurface), // Ajusta el color del texto según el tema
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: isDark ? colorScheme.secondary : Colors.white.withValues(alpha: 0.8), // Ajusta el color de fondo según el tema
+                    fillColor: colorScheme.surface.withValues(alpha: 0.7),
                     hintText: 'Introduce tu Email',
                     prefixIcon: Icon(Icons.email, color: colorScheme.primary), // Usa el color primario del tema para el ícono
                     border: OutlineInputBorder(
@@ -85,11 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: _passwordController,// Controlador para la contraseña
                   obscureText: true, // Oculta contraseña
+                  style: TextStyle(color: colorScheme.onSurface),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: isDark ? colorScheme.secondary : Colors.white.withValues(alpha: 0.8), // Ajusta el color de fondo según el tema
+                    fillColor: colorScheme.surface.withValues(alpha: 0.7),
                     hintText: 'Tu Contraseña',
-                    hintStyle: TextStyle(color: colorScheme.inversePrimary.withValues(alpha: 0.5)), // Ajusta el color del hint para que sea visible en modo oscuro
+                    hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                     prefixIcon: Icon(Icons.lock, color: colorScheme.primary), // Usa el color primario del tema para el ícono
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -101,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Botón de Iniciar Sesión 
                 ElevatedButton(
-                  onPressed: () async{// Aquí la lógica de autenticación.
+                  onPressed: () async{
                       String email = _emailController.text.trim();
                       String password = _passwordController.text.trim();
 
@@ -121,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor:colorScheme.primary,
-                    foregroundColor:Colors.white,
+                    foregroundColor:colorScheme.onPrimary,
                     minimumSize: const Size(double.infinity, 55), // Botón ancho y alto
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
