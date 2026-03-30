@@ -5,19 +5,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Scaffold(
-      appBar: AppBar(title: const Text("Mi Perfil")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Aquí pones tu contenedor del Avatar con gradiente...
-            const CircleAvatar(radius: 50, child: Icon(Icons.person)),
-            const SizedBox(height: 20),
-            const Text("@UtopiaUser", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ],
-=======
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -28,11 +15,11 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         foregroundColor: colorScheme.primary,
       ),
-      extendBodyBehindAppBar: true, // Permite que el fondo se extienda detrás del AppBar
+      extendBodyBehindAppBar: true,
       body: Container(
-         width: double.infinity,
-         height: double.infinity,
-         decoration: BoxDecoration(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -41,42 +28,32 @@ class ProfileScreen extends StatelessWidget {
             : [colorScheme.primaryContainer.withValues(alpha: 0.3), colorScheme.surface],
           ),
         ),
-
         child: SafeArea(
           child: Column(
             children: [
               const SizedBox(height: 30),
-              // Avatar de perfil
               CircleAvatar(
                 radius: 60,
-                backgroundImage: AssetImage('assets/images/profile_placeholder.png'),
+                backgroundImage: const AssetImage('assets/images/profile_placeholder.png'),
                 child: Icon(Icons.person, size: 60, color: colorScheme.primary),
               ),
-            const SizedBox(height: 20),
-
-            Text(
-              "Nombre de Usuario",
-              style: TextStyle(
-                fontSize: 24, 
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurface
+              const SizedBox(height: 20),
+              Text(
+                "Nombre de Usuario",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
               ),
-            ),
-              
-            const SizedBox(height: 10),
-
-            Text(
-              "Amante de los libros",
-              style: TextStyle(color: colorScheme.onSurfaceVariant),
-            ),
-
-            const SizedBox(height: 30), 
-                
-              
-            
+              const SizedBox(height: 10),
+              Text(
+                "Amante de los libros",
+                style: TextStyle(color: colorScheme.onSurfaceVariant),
+              ),
+              const SizedBox(height: 30),
             ],
           ),
->>>>>>> feat-theme-sakura
         ),
       ),
     );
