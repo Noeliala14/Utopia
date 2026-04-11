@@ -45,7 +45,7 @@ app.*.map.json
 /android/app/release
 
 
-# Claves secretas
+# Claves secretas/secret keys
 lib/core/supabase_conf.dart/configuracion.dart
 google-services.json
 firebase_options.dart

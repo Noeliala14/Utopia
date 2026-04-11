@@ -3,6 +3,7 @@ import 'package:flutter_application_1/features/auth/presentation/screens/profile
 import 'package:flutter_application_1/features/auth/data/services/auth_service.dart';
 import 'package:flutter_application_1/features/books/presentation/screens/books_screen.dart';
 import 'package:flutter_application_1/core/themes/theme_provider.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/exchange_screen.dart';
 import 'package:provider/provider.dart';
 
 class DrawersOne extends StatelessWidget {
@@ -87,6 +88,24 @@ class DrawersOne extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const ProfileScreen()));
                 },
               ),
+              ListTile(
+                leading: Icon(Icons.swap_horiz, color: colorScheme.primary),
+                title: Text(
+                  "I N T E R C A M B I O",
+                  style: TextStyle(
+                    color: colorScheme.onSurface,
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ExchangeScreen()),
+                  );
+              },
+              ),
+              
 
               // MI BIBLIOTECA
               ListTile(
@@ -139,7 +158,7 @@ class DrawersOne extends StatelessWidget {
                     Switch(
                       value: themeProvider.isDarkMode,
                       onChanged: (_) => themeProvider.toggleTheme(),
-                      activeColor: colorScheme.primary,
+                      activeThumbColor: colorScheme.primary,
                     ),
                   ],
                 ),

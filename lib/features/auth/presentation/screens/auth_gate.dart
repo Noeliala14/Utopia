@@ -16,7 +16,8 @@ class AuthGate extends StatelessWidget {
     await supabase.from('profiles').upsert({
       'id': firebaseUser.uid, // Usamos el mismo ID de Firebase
       'email': firebaseUser.email,
-    });
+      'user_name': firebaseUser.displayName ?? firebaseUser.email?.split('@')[0] ?? 'Usuario Nuevo',
+      });
   }
 
   @override

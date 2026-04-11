@@ -27,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
           books = data['works'];
           isLoading = false;
         });
-      } else {
+      } 
+      else {
         setState(() => isLoading = false);
       }
     } catch (e) {
@@ -127,19 +128,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
                             // PORTADA
+                            // Si no hay portada, se muestra un placeholder con el icono de libro
                             Expanded(
                               flex: 7,
-                              child: thumbnail != null
-                                  ? Image.network(
+                              child: thumbnail != null // Si hay portada, se muestra la imagen
+                                  ? Image.network( // Carga la imagen de portada
                                       thumbnail,
                                       fit: BoxFit.cover,
                                       width: double.infinity,
-                                      errorBuilder: (_, __, ___) =>
-                                          _buildPlaceholder(colorScheme),
+                                      errorBuilder: (context, error, stackTrace) => _buildPlaceholder(colorScheme),
+
                                     )
-                                  : _buildPlaceholder(colorScheme),
-                            ),
+                                  : _buildPlaceholder(colorScheme), // Si no hay portada, se muestra el placeholder
+
+                            ), 
 
                             // INFO DEL LIBRO
                             Expanded(
@@ -193,14 +197,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildPlaceholder(ColorScheme colorScheme) {
+  Widget _buildPlaceholder(ColorScheme colorScheme) { //buildPlaceholder es un método auxiliar para mostrar un placeholder cuando no hay portada disponible
     return Container(
       width: double.infinity,
       color: colorScheme.primaryContainer,
       child: Icon(
         Icons.menu_book,
         size: 50,
-        color: colorScheme.primary.withValues(alpha: 0.5),
+        color: colorScheme.primary.withValues(alpha: 0.5), // withValues es una extensión personalizada para ajustar la opacidad sin afectar el color base
       ),
     );
   }
