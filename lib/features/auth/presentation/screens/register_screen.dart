@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/data/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
@@ -14,6 +15,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController(); // Controlador para el campo de contraseña
   final AuthService _authService = AuthService(); // Instancia del servicio de autenticación
 
+  //  Limpieza de recursos 
+  @override 
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -112,11 +120,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Registro exitoso')),
                   );
-                  Navigator.pop(context); // Regresa a la pantalla anterior (login)
-                } catch (e) {
-                  if (!context.mounted) return; // Verifica si el contexto aún está montado antes de mostrar el SnackBar
+                  Navigator.pop(context);
+
+                } on FirebaseAuthException catch (e) {
+                  if (!context.mounted) return;
+                  
+                  final mensaje = switch (e.code) {
+                    'email-already-in-use' => 'El correo electrónico ya está en uso.',
+                    'invalid-email' => 'El correo electrónico no es válido.',
+                    'weak-password' => 'La contraseña es muy débil.',
+                    'network-request-failed' => 'Error de red. Verifica tu conexión.',
+                    _ => e.message ?? 'Error al registrar.',
+                  };
+
+                  // Regresa a la pantalla anterior (login)
+
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error al registrar: $e')),
+                    SnackBar(content: Text(mensaje)),
                   );
                 }
               },

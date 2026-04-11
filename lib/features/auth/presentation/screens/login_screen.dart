@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/data/services/auth_service.dart';
 import 'package:flutter_application_1/features/auth/presentation/screens/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -114,13 +115,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       try {
                         await _authService.signIn(email, password); // Llama al método de inicio de sesión del servicio de autenticación
 
-                      } catch (e) {
-                        // escudo 
-                        if (!context.mounted) return; // Verifica si el contexto aún está montado antes de mostrar el SnackBar
+                      } on FirebaseAuthException catch (e) {
+                        if (!context.mounted) return; // Verifica que el contexto aún esté montado antes de mostrar el SnackBar
+                        
+                        // Muestra un mensaje de error específico según el código de error de FirebaseAuthException
+                        final mensaje = switch (e.code) {
+                          'user-not-found' => 'No se encontró una cuenta con ese correo.',
+                          'wrong-password' => 'Contraseña incorrecta. Inténtalo de nuevo.',
+                          'invalid-email' => 'El correo electrónico no es válido.',
+                          'user-disabled' => 'Esta cuenta ha sido deshabilitada.',
+                          'too-many-requests' => 'Demasiados intentos de inicio de sesión. Inténtalo más tarde.',
+                          'network-request-failed' => 'Error de red. Verifica tu conexión.',
+                          _ => e.message ??'Error al iniciar sesión.',
+                        };
 
-                        // Manejo de errores (puedes mostrar un mensaje de error al usuario)
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error al iniciar sesión: $e')),
+                          SnackBar(content: Text(mensaje)),
                         );
                       }
                   },

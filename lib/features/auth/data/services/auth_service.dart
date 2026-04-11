@@ -11,10 +11,10 @@ class AuthService {
         password: password,
       );
       return userCredential.user;
-    } catch (e) {
-      // print('Error en el registro: $e');
-      return null;
+    } on FirebaseAuthException {
+      rethrow; // rethrow la excepción para que pueda ser manejada en la UI
     }
+   
   }
 
   // Método para iniciar sesión
@@ -25,9 +25,8 @@ class AuthService {
         password: password,
       );
       return userCredential.user;
-    } catch (e) {
-      // print('Error en el inicio de sesión: $e');
-      return null;
+    } on FirebaseAuthException {
+      rethrow; // rethrow para que el error pueda ser manejado en la UI
     }
   }
 
