@@ -149,11 +149,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               onPressed: () async { // Acción al presionar el botón
                 final email = _emailController.text.trim(); // Obtiene el correo electrónico ingresado
                 final password = _passwordController.text.trim(); // Obtiene la contraseña ingresada
-                final username = _usernameController.text.trim(); // Obtiene el nombre de usuario ingresado
-                final bio = _bioController.text.trim(); // Obtiene la biografía ingresada
+                
 
 
                 try {
+                  final username = _usernameController.text.trim();
+                  final bio = _bioController.text.trim();
+
+
                   await _authService.signUp(email, password, username, bio);
                    
                   if (!context.mounted) return; // Verifica si el contexto aún está montado antes de mostrar el SnackBar
