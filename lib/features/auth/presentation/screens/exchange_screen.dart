@@ -34,9 +34,9 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
 
     final response = await Supabase.instance.client
         .from('books_circulation')
-        .select('''*,propietario:current_owner_id (user_name)''')
+        .select('''*,propietario:original_owner_id (user_name)''')
         .eq('status', 'disponible')
-        .neq('current_owner_id', currentUid ?? '');
+        .neq('original_owner_id', currentUid ?? '');
 
     setState(() {
       _availableBooks = List<Map<String, dynamic>>.from(response);

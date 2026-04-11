@@ -13,6 +13,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController(); // Controlador para el campo de correo electrónico
   final TextEditingController _passwordController = TextEditingController(); // Controlador para el campo de contraseña
+  final TextEditingController _usernameController = TextEditingController(); // Controlador para el campo de nombre de usuario (opcional) 
+  final TextEditingController _bioController = TextEditingController(); 
   final AuthService _authService = AuthService(); // Instancia del servicio de autenticación
 
   //  Limpieza de recursos 
@@ -20,6 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _usernameController.dispose();
+    _bioController.dispose();
     super.dispose();
   }
   @override
@@ -51,25 +55,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
       ),
              
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-
             children: [
-              Icon( 
-                Icons.person_add, 
-                size: 100, 
-                color: colorScheme.primary.withValues (alpha: 0.8)), // Icono con un tono más suave del color primario
+              const SizedBox(height: 80), // Espacio superior para separar el contenido del AppBar
+              Icon(Icons.person_add, size:100,
+                color: colorScheme.primary.withValues(alpha: 0.8)),
+              const SizedBox(height: 100), // Espacio entre el ícono y los campos de texto
 
-                const SizedBox(height: 30), // Espacio entre el ícono y los campos de texto
-              
+            // Campo de Nombre de Usuario
+              TextField(
+                controller: _usernameController, // Asocia el controlador al campo de texto
+                style: TextStyle(color: colorScheme.onSurface),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: colorScheme.surface.withValues(alpha: 0.7),
+                  labelText: 'Nombre de usuario',
+                  labelStyle: TextStyle(color: colorScheme.primary),
+                  prefixIcon: Icon(Icons.person, color: colorScheme.primary),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
 
-        
             // Campo de Correo Electrónico
             TextField(
-              controller: _emailController, // Asocia el controlador al campo de texto
-              keyboardType: TextInputType.emailAddress,
+              controller: _emailController, 
+              keyboardType: TextInputType.emailAddress, 
               style: TextStyle(color: colorScheme.onSurface),
               decoration: InputDecoration(
               filled: true,
@@ -88,8 +105,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
             const SizedBox(height: 16),
 
+            // Campo de Contraseña
             TextField(
-              controller: _passwordController, // Asocia el controlador al campo de texto
+              controller: _passwordController, 
               obscureText: true,
               style: TextStyle(color: colorScheme.onSurface),
               decoration: InputDecoration(
@@ -105,15 +123,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
 
+              const SizedBox(height: 16),
+
+              // CAMPO BIO ← nuevo
+              TextField(
+                controller: _bioController,
+                maxLines: 3, // ← permite varias líneas
+                style: TextStyle(color: colorScheme.onSurface),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: colorScheme.surface.withValues(alpha: 0.7),
+                  labelText: 'Cuéntanos algo sobre ti...',
+                  labelStyle: TextStyle(color: colorScheme.primary),
+                  prefixIcon: Icon(Icons.edit_note, color: colorScheme.primary),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
               const SizedBox(height: 32),
 
-            ElevatedButton(
+              // Botón de Registro
+              ElevatedButton(
               onPressed: () async { // Acción al presionar el botón
-                String email = _emailController.text.trim(); // Obtiene el correo electrónico ingresado
-                String password = _passwordController.text.trim(); // Obtiene la contraseña ingresada
+                final email = _emailController.text.trim(); // Obtiene el correo electrónico ingresado
+                final password = _passwordController.text.trim(); // Obtiene la contraseña ingresada
+                final username = _usernameController.text.trim(); // Obtiene el nombre de usuario ingresado
+                final bio = _bioController.text.trim(); // Obtiene la biografía ingresada
+
 
                 try {
-                  await _authService.signUp(email, password);
+                  await _authService.signUp(email, password, username, bio);
                    
                   if (!context.mounted) return; // Verifica si el contexto aún está montado antes de mostrar el SnackBar
 
