@@ -29,14 +29,14 @@ class Profile {
 
 factory Profile.fromMap(Map<String, dynamic> map) {
     return Profile(
-      id: map['id'] ?? '',
-      username: map['username'] ?? '',
-      email: map['email'] ?? '',
-      bio: map['bio'],
-      avatarUrl: map['avatar_url'],
+      id:         map['id'] ?? '',
+      username:   map['user_name'] ?? '',
+      email:      map['email'] ?? '',
+      bio:        map['bio'],
+      avatarUrl:  map['avatar_url'],
       booksExchanged: map['books_exchanged'] ?? 0,
-      isEcoHero: map['is_eco_hero'] ?? false,
-      createdAt: map['created_at'] != null 
+      isEcoHero:  map['is_eco_hero'] ?? false,
+      createdAt:  map['created_at'] != null 
                  ? DateTime.parse(map['created_at']) 
                  : null,
       lastLogin: map['last_login'] != null 
@@ -49,7 +49,7 @@ factory Profile.fromMap(Map<String, dynamic> map) {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'username': username,
+      'user_name': username,
       'email': email,
       'bio': bio,
       'avatar_url': avatarUrl,
