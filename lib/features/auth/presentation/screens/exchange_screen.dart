@@ -13,7 +13,7 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
   List<Map<String, dynamic>> _availableBooks = [];
   bool _isLoading = true;
 
-   
+  // Widget para mostrar un placeholder cuando no hay imagen de portada disponible
   Widget _buildBookPlaceholder(ColorScheme colorScheme) {
     return Container(
       width: 50,
@@ -22,6 +22,77 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
       child: Icon(Icons.book, color: colorScheme.primary),
     );
   }
+
+  // Método para el diálogo de solicitud de intercambio 
+  Future<void> _showRequestDialog(
+    BuildContext context,
+    Map<String, dynamic> book,
+    String ownerName,
+    ColorScheme colorScheme,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: Text(
+          'Solicitar intercambio', 
+          style: TextStyle(
+            color: colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              book['title'] ?? 'Sin título',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Ofrecido por: $ownerName',
+              style: TextStyle(color: colorScheme.onSurfaceVariant),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Se enviará una solicitud al propietario. Podréis coordinar el intercambio una vez aceptada.',
+              style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 13),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancelar',
+              style: TextStyle(color: colorScheme.onSurfaceVariant),
+            ),
+          ),
+           ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('¡Solicitud enviada a $ownerName! 📚'),
+                  backgroundColor: colorScheme.primary,
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text('Solicitar'),
+          ),
+        ],
+      ),
+    );
+  }
+            
 
   @override
   void initState() {
@@ -38,6 +109,7 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
         .eq('status', 'disponible')
         .neq('original_owner_id', currentUid ?? '');
 
+    // Convertimos la respuesta a una lista de mapas y actualizamos el estado
     setState(() {
       _availableBooks = List<Map<String, dynamic>>.from(response);
       _isLoading = false;
@@ -49,6 +121,7 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Diseño de la pantalla de libros disponibles
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -116,7 +189,7 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
                           : null;
                       final ownerName =
                           book['propietario']?['user_name'] ?? 'Usuario';
-
+                      
                       return Card(
                         margin: const EdgeInsets.only(bottom: 12),
                         elevation: 2,
@@ -151,8 +224,27 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
                             style:
                                 TextStyle(color: colorScheme.onSurfaceVariant),
                           ),
-                          trailing: Icon(Icons.handshake_outlined,
-                              color: colorScheme.primary),
+
+                          // Botón para solicitar intercambio -->
+
+                          // trailing es un widget que se muestra al final del ListTile, ideal para acciones como botones de acción.
+                          trailing: ElevatedButton.icon(
+                            onPressed: () => _showRequestDialog( // Al hacer clic en el botón, se muestra un diálogo de solicitud de intercambio
+                              context,
+                              book,
+                              ownerName,
+                              colorScheme,
+                            ),
+                            icon: const Icon(Icons.handshake_outlined, size: 18),
+                            label: const Text('Pedir'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: colorScheme.primary,
+                              foregroundColor: colorScheme.onPrimary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },
