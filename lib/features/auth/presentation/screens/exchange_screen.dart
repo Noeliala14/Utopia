@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_application_1/features/auth/presentation/screens/public_profile_screen.dart';
 
 class ExchangeScreen extends StatefulWidget {
   const ExchangeScreen({super.key});
@@ -49,12 +50,16 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
               book['title'] ?? 'Sin título',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
+
             const SizedBox(height: 8),
+
             Text(
               'Ofrecido por: $ownerName',
               style: TextStyle(color: colorScheme.onSurfaceVariant),
             ),
+
             const SizedBox(height: 16),
+
             Text(
               'Se enviará una solicitud al propietario. Podréis coordinar el intercambio una vez aceptada.',
               style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 13),
@@ -219,10 +224,26 @@ class _ExchangeScreenState extends State<ExchangeScreen> {
                               color: colorScheme.onSurface,
                             ),
                           ),
-                          subtitle: Text(
-                            'Ofrecido por: $ownerName',
-                            style:
-                                TextStyle(color: colorScheme.onSurfaceVariant),
+                          subtitle: GestureDetector(
+                            onTap: () {
+                              final ownerId = book['original_owner_id'] as String;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PublicProfileScreen(
+                                    userId: ownerId,
+                                    userName: ownerName,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                               'Ofrecido por: $ownerName 👤',
+                              style: TextStyle(
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
 
                           // Botón para solicitar intercambio -->
