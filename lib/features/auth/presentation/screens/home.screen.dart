@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             coverUrl,
                                             width: 120,
                                             height: 140,
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                             errorBuilder: (context, error, stackTrace) =>
                                                 _buildSmallPlaceholder(colorScheme),
                                           )
